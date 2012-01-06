@@ -38,3 +38,4 @@ end
 gem 'rails-backbone'
 gem 'mongoid'
 gem 'bson_ext'
+gem 'ejs'

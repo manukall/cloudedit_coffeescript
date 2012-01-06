@@ -15,12 +15,12 @@
     )
 
   index: ->
-    $.getJSON('/documents', (data) ->
-      if data
-        documents = _(data).map (i) -> new DocumentEdit.Models.Document(i)
-        new window.DocumentEdit.Views.Index(documents: documents)
-      else
-        new Error(message: "Error loading documents.")
+    documents = new DocumentEdit.Collections.Documents()
+    documents.fetch(
+      success: =>
+        new DocumentEdit.Views.Index(collection: documents)
+      error: ->
+        new Error(message: 'Error loading documents.')
     )
 
   newDoc: ->

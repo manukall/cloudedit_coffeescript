@@ -1,8 +1,12 @@
 ﻿class DocumentEdit.Views.Edit extends Backbone.View
+  template: JST['backbone/templates/document']
+
   events:
     "submit form": "save"
 
   initialize: ->
+    _.bindAll(@, 'render')
+    @model.bind('change', @render)
     @render()
 
   save: ->
@@ -13,7 +17,6 @@
       success: (model, resp) ->
         new DocumentEdit.Views.Notice(message: msg)
         @model = model
-        @render()
         @delegateEvents()
         Backbone.history.saveLocation('documents/' + model.id)
     error: ->
@@ -22,18 +25,7 @@
     false
 
   render: ->
-    out = '<form>'
-    out += "<label for='title'>Title</label>"
-    out += "<input name='title' type='text' />"
-    out += "<label for='body'>Body</label>"
-    out += "<textarea name='body'>" + (@model.escape('body') || '') + "</textarea>"
-
-    submitText = if @model.isNew() then 'Create' else 'Save'
-
-    out += "<button>" + submitText + "</button>"
-    out += "</form>"
-
-    $(@el).html(out)
+    $(@el).html(@template(model: @model))
     $('#app').html(@el)
 
     @$('[name=title]').val(@model.get('title'))

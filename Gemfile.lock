@@ -125,6 +125,7 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   coffee-rails (~> 3.1.1)
+  ejs
   jquery-rails
   mongoid
   rails (= 3.1.3)

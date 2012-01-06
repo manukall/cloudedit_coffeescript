@@ -1,16 +1,11 @@
 ﻿class DocumentEdit.Views.Index extends Backbone.View
+  template: JST['backbone/templates/documents_collection']
+
   initialize: ->
     @documents = @options.documents
     @render()
 
   render: ->
-    if @documents.length > 0
-      out = "<h3><a href='#new'>Create New</a></h3><ul>"
-      _(@documents).each (item) ->
-        out += "<li><a href='#documents/" + item.id + "'>" + item.escape('title') + "</a></li>"
-      out += "</ul>"
-    else
-      out = "<h3>No documents! <a href='#new'>Create one</a></h3>"
-    $(@el).html(out)
+    $(@el).html(@template(collection: @collection))
     $('#app').html(@el)
 
